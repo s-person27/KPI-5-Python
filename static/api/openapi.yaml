@@ -1,0 +1,1115 @@
+openapi: 3.0.2
+info:
+  title: Api Keystore
+  version: 1.0.0
+  description: API for Keystore This site is a project for the course of web programming. 
+               The site is a shop for buying keyboards.
+               Your can choose your product and buy it.
+  contact:
+    name: 'Danil Nikolaichuk'
+    email: 's.person2734@gmail.com'
+
+servers:
+- url: http://127.0.0.1:8000/
+paths:
+  /apps/users/:
+    get:
+      operationId: listUsers
+      description: 'Get  all user list'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+      tags:
+        - apps
+    post:
+      operationId: createUser
+      description: 'Create new user'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: 'Good request'
+      tags:
+        - apps
+  /apps/users/{id}/:
+    get:
+      operationId: retrieveUser
+      description: 'get more details about user'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this user.
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: 'good request'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+      tags:
+        - apps
+    put:
+      operationId: updateUser
+      description: 'Update user details'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this user.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: 'Good request'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+
+
+      tags:
+        - apps
+    patch:
+      operationId: partialUpdateUser
+      description: 'Partial Update User'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this user.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: 'good request'
+      tags:
+        - apps
+    delete:
+      operationId: destroyUser
+      description: 'Delete user'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this user.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: 'good delete request'
+      tags:
+        - apps
+  /apps/products/:
+    get:
+      operationId: listProducts
+      description: 'get all products list'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+          description: 'all products list good request'
+      tags:
+        - apps
+    post:
+      operationId: createProduct
+      description: 'Create new product'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: 'good request'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+  /apps/products/{id}/:
+    get:
+      operationId: retrieveProduct
+      description: 'get more details about product'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this product.
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: 'good request'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    put:
+      operationId: updateProduct
+      description: 'Update product details'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this product.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: 'good request'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    patch:
+      operationId: partialUpdateProduct
+      description: 'Partial Update Product'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this product.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Product'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: 'good request'
+      tags:
+        - apps
+    delete:
+      operationId: destroyProduct
+      description: 'delete product'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this product.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: 'good delete request'
+      tags:
+        - apps
+  /apps/orders/:
+    get:
+      operationId: listOrders
+      description: 'get all orders list'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+          description: ''
+      tags:
+        - apps
+    post:
+      operationId: createOrder
+      description: 'create new order'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: 'good request'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+  /apps/orders/{id}/:
+    get:
+      operationId: retrieveOrder
+      description: 'get more details about order'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this order.
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: 'good request'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    put:
+      operationId: updateOrder
+      description: 'update order details'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this order.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: 'good request'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    patch:
+      operationId: partialUpdateOrder
+      description: 'partial update order details'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this order.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: 'good request'
+      tags:
+        - apps
+    delete:
+      operationId: destroyOrder
+      description: 'delete order'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this order.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: 'good delete request'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+  /apps/orderitems/:
+    get:
+      operationId: listOrderItems
+      description: 'get all order items list'
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem'
+          description: 'good request'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    post:
+      operationId: createOrderItem
+      description: 'Create a new order item'
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem'
+          description: 'successful operation'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+  /apps/orderitems/{id}/:
+    get:
+      operationId: retrieveOrderItem
+      description: 'retrieve order item details'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this order item.
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem'
+          description: 'successful operation'
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    put:
+      operationId: updateOrderItem
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this order item.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    patch:
+      operationId: partialUpdateOrderItem
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this order item.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderItem'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem'
+          description: ''
+      tags:
+        - apps
+    delete:
+      operationId: destroyOrderItem
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this order item.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+  /apps/shippingaddress/:
+    get:
+      operationId: listShippingAddress
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+      tags:
+        - apps
+    post:
+      operationId: createShippingAddress
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+  /apps/shippingaddress/{id}/:
+    get:
+      operationId: retrieveShippingAddress
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this shipping address.
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+      tags:
+        - apps
+    put:
+      operationId: updateShippingAddress
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this shipping address.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    patch:
+      operationId: partialUpdateShippingAddress
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this shipping address.
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShippingAddress'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShippingAddress'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+    delete:
+      operationId: destroyShippingAddress
+      description: ''
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: A unique integer value identifying this shipping address.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'not found'
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+          description: 'bad request'
+      tags:
+        - apps
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+        username:
+          type: string
+          pattern: ^[\w.@+-]+\z
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        sex:
+          enum:
+            - 1
+            - 2
+          type: integer
+        birth_date:
+          type: string
+          format: date
+          nullable: true
+        is_staff:
+          type: boolean
+          description: Designates whether the user can log into this admin site.
+      required:
+        - username
+        - email
+    Product:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+          maxLength: 200
+        price:
+          type: number
+        description:
+          type: string
+        digital:
+          type: boolean
+          nullable: true
+        image:
+          type: string
+          format: binary
+          nullable: true
+      required:
+        - price
+        - description
+    Order:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+        date_order:
+          type: string
+          format: date-time
+          readOnly: true
+        complete:
+          type: boolean
+          nullable: true
+        transaction_id:
+          type: string
+          nullable: true
+          maxLength: 200
+        customer:
+          type: string
+          nullable: true
+    OrderItem:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+        quantity:
+          type: integer
+          nullable: true
+        date_added:
+          type: string
+          format: date-time
+          readOnly: true
+        product:
+          type: string
+          nullable: true
+        order:
+          type: string
+          nullable: true
+    ShippingAddress:
+      type: object
+      properties:
+        url:
+          type: string
+          readOnly: true
+        address:
+          type: string
+          nullable: true
+          maxLength: 255
+        city:
+          type: string
+          nullable: true
+          maxLength: 200
+        phone:
+          type: string
+          nullable: true
+          maxLength: 12
+        customer:
+          type: string
+          nullable: true
+        order:
+          type: string
+          nullable: true

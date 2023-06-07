@@ -1,0 +1,117 @@
+{% extends 'apps/index.html' %}
+{% load static %}
+
+
+
+
+
+
+{% block products %}
+    <br>
+    <div class="container-md p-1 card ">
+        <div class="row">
+            <div class=" col col-md-4 ">
+                <a class="btn btn-outline-primary " href="{% url 'main' %}"> <- Back to shoping </a>
+            </div>
+            <div class="col-auto ">
+                <h2>Cart</h2>
+            </div>
+        </div>
+
+        <hr>
+        <table class="table">
+            <tr>
+                <th><h5>Items: <strong>{{ order.get_cart_items }}</strong></h5></th>
+                <th><h5>Total: <strong>{{ order.get_cart_total }}</strong></h5></th>
+                <th><a style="float: right;margin: 5px" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+                </th>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <div class="col-auto p-1 card">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col"></th>
+                <th scope="col">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for  elem in items %}
+                <tr>
+                    <th scope="row"><img src="{{ elem.product.image.url }}" style="width: 100px ; height: 100px"></th>
+                    <td><p class="px-lg-2">{{ elem.product.name }}</p></td>
+                    <td><p class="px-lg-2">{{ elem.product.price }}</p></td>
+                    <td>
+                        <p class="px-sm-2">{{ elem.quantity }}
+                            <button class=" btn  update-cart  " data-product='{{ elem.product.id }}' data-action='add'>
+                                +
+                            </button>
+                            <button class=" btn update-cart" data-product='{{ elem.product.id }}' data-action='remove'>
+                                -
+                            </button>
+                        </p>
+
+                    </td>
+                    <td><p class="px-lg-2">{{ elem.get_total }}</p></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <script type="text/javascript">
+        var updateBtns = document.getElementsByClassName('update-cart')
+        var user = '{{ request.user }}'
+        for (var i = 0; i < updateBtns.length; i++) {
+            updateBtns[i].addEventListener('click', function () {
+                var productId = this.dataset.product
+                var action = this.dataset.action
+                console.log('productId:', productId, 'action:', action)
+                console.log('User:', user)
+
+                if (user === 'AnonymousUser') {
+                    console.log("User not is authentification")
+                } else {
+                    updateUserOrder(productId, action)
+
+                }
+
+
+                function updateUserOrder(productId, action) {
+                    console.log("User is authentificated , sending data...")
+
+                    var url = '/update_item/'
+
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken,
+
+                        },
+                        body: JSON.stringify({'productId': productId, 'action': action})
+
+                    })
+                        .then((response) => {
+                            return response.json()
+                        })
+
+                        .then((data) => {
+                            location.reload()
+                            {#console.log('data:', data )#}
+                        })
+                }
+            })
+        }
+
+    </script>
+{% endblock %}
+

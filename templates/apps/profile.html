@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+
+    profile
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid ">
+        <div class="row" style="margin: 1%"></div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-md-4  rounded justify-content-center  ">
+                <div class="card card-body " style="background-color:#e3ffff">
+                    {#                    <form name="Sign_in" method="post">#}
+                    {% csrf_token %}
+                    <h1 style="text-align: center">profile </h1>
+                    <div class="mb-md-2 d-grid gap-3 ">
+                        <table class="table ">
+                            {% for el in profile %}
+                                <tr>
+                                    <th scope="row">Name</th>
+                                    <td>{{ el.username }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email</th>
+                                    <td>{{ el.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Birthday</th>
+                                    <td>{{ el.birth_date }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Sex</th>
+                                    <td>{{ el.get_sex_display }}</td>
+                                </tr>
+
+                                </table>
+                                <a type="button" class="btn btn-secondary" href="{% url 'edit' pk=el.id %}">
+                                    <img src="{% static 'image/apps/pen.svg' %}" width="16" height="16">
+
+                                    Edit
+                                </a>
+                            {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}

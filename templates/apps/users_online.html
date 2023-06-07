@@ -1,0 +1,18 @@
+{% extends 'apps/index.html' %}
+{% load static %}
+{% block chat %}
+    <div class="container-fluid">
+    <br>
+    <div class="col-auto p-1 card px-2">
+                    <label for="UserOnline" style="position: center;" >Active Users</label>
+                    <select multiple class="form-control" id="UserOnline">
+                        {% for user in users %}
+                            <option>{{ user }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+    </div>
+
+{% endblock %}
+
+
