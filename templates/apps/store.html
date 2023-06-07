@@ -1,0 +1,89 @@
+{% extends 'apps/index.html' %}
+
+
+{% block products %}
+
+
+
+    <div class="col-auto px-2 px-lg-2 m-2">
+        <h3 class="text-center">Products</h3>
+        {% for elem in obj %}
+            <div class="card" >
+                <div class="card-body" >
+                    <div class="row">
+                        <div class=" col col-md-3 px-1">
+                            {#                                        <img src="">#}
+                            <img class="img-thumbnail" src="{{ elem.image.url }}">
+                        </div>
+                        <div class="col-auto col-md-6 px-2 ">
+
+                            <p class="text">Name:{{ elem.name }}</p>
+                            <p class="text"> Price: {{ elem.price }}</p>
+                            <p class="text">Description {{ elem.description }}</p>
+
+                        </div>
+                        <div class=" col col-md-3 px-1">
+                            <button class="btn-outline-success btn update-cart" data-product="{{ elem.id }}"
+                                    data-action="add" href="">Add to cart
+                            </button>
+{#                            <a class="btn-outline-secondary btn" href="">View </a>#}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script type="text/javascript">
+        var updateBtns = document.getElementsByClassName('update-cart')
+        var user = '{{ request.user }}'
+        for (var i = 0; i < updateBtns.length; i++) {
+            updateBtns[i].addEventListener('click', function () {
+                var productId = this.dataset.product
+                var action = this.dataset.action
+                console.log('productId:', productId, 'action:', action)
+                console.log('User:', user)
+
+                if( user === 'AnonymousUser'){
+                    console.log("User not is authentification")
+                }else{
+                    updateUserOrder(productId, action)
+
+                }
+
+
+                function updateUserOrder(productId, action){
+                     console.log("User is authentificated , sending data...")
+
+                    var url = '/update_item/'
+
+                    fetch(url, {
+                        method: 'POST',
+                        headers:{
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrftoken,
+
+
+                        },
+                        body: JSON.stringify({'productId':productId, 'action':action})
+
+                    })
+                        .then((response)=>{
+                            return response.json()
+                        })
+
+                        .then((data)=>{
+                            location.reload()
+                            {#console.log('data:', data )#}
+                        })
+                }
+            })
+        }
+
+
+
+    </script>
+
+
+{% endblock %}

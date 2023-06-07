@@ -1,0 +1,97 @@
+{% extends 'apps/index.html' %}
+{% load bootstrap5 %}
+
+
+
+
+
+{% block products %}
+    <br>
+    <div class="container-md p-1 card ">
+
+        <div class="row">
+            <div class=" col col-md-5">
+            </div>
+            <div class="col-auto ">
+                <h2>Checkout</h2>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="col p-1 ">
+        <div class="row">
+            <div class="col-auto col-md-6  px-2  card">
+                <div id="shipping-info">
+                    <div class="text-center"><p><h4>Delivery address</h4></p> </div>
+
+                    <form method="post" name="checkout_id">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="d-grid gap-2 py-2">
+                            <button type="submit" class="btn btn-primary  bt btn-block"> Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-auto col-md-6 px-2 card">
+
+                <div class="row  p-2">
+                    <div class="col-md-5 p-3">
+                        <a class="btn btn-outline-primary" href="{% url 'cart' %}"> <- Back to Cart</a>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                        <h2><strong>Cart</strong></h2></p>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for  elem in items %}
+                        <tr>
+                            <th scope="row"><img src="{{ elem.product.image.url }}"
+                                                 style="width: 50px ; height: 50px">
+                            </th>
+                            <td><p class="px-lg-2">{{ elem.product.name }}</p></td>
+                            <td><p class="px-lg-2">{{ elem.product.price }}</p></td>
+                            <td><p class="px-lg-2">{{ elem.quantity }}</p></td>
+                            <td><p class="px-lg-2">{{ elem.get_total }}</p></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+                <div class="row-auto">
+                    <table class="table">
+                        <tr>
+                            <th><h5>Items: <strong>{{ order.get_cart_items }}</strong></h5></th>
+                            <th><h5>Total: <strong>{{ order.get_cart_total }}</strong></h5></th>
+                            {#                            <th><a style="float: right;margin: 5px" class="btn btn-success"#}
+                            {#                                   href="{% url 'cart' %}">Back to Cart </a></th>#}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var shipping = '{{ order.shipping }}'
+
+        if (shipping === 'false') {
+            document.getElementById('shipping-info').innerHTML = ''
+        }
+
+    </script>
+{% endblock %}
+</body>
+</html>

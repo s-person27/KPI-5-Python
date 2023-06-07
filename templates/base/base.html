@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'css/apps.css' %}">
+    {#    <script type="text/javascript" src={% static "js/cart.js" %}></script>#}
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+
+    <script type="text/javascript">
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getCookie('csrftoken');
+
+
+
+
+    </script>
+</head>
+<body>
+
+{# rgba(110,41,15,1) #}
+{#F5F5DC#}
+
+
+<nav class="navbar bg-gradient navbar-dark navbar-expand-lg bg-body-tertiary " style="background-color: #6E290F ">
+
+    <div class="container-fluid container px-2 px-lg-3">
+
+        <a class="navbar-brand" style="color: #1a1e21" href="{% url 'main' %}"> <img
+                style="width: 30px; height: 30px ; margin-left:5%"
+                src="{% static 'image/apps/logo.svg' %}">Shops</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="   navbar-nav ms-auto mb-3 mb-lg-1 ">
+
+                <a class="nav-link" aria-current="page" href="{% url 'main' %}">Home</a>
+
+                <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+                {% if  user.is_anonymous %}
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                            {% if  user.is_authenticated  and  not user.is_anonymous %}
+                                <li><a class="dropdown-item" href="{% url 'logout' %}">logout</a></li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="">login</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+
+{% block content %}
+
+{% endblock %}
+
+<script type="text/javascript">
+
+
+    {#function getCookie(name) {#}
+    {#    let cookieValue = null;#}
+    {#    if (document.cookie && document.cookie !== '') {#}
+    {#        const cookies = document.cookie.split(';');#}
+    {#        for (let i = 0; i < cookies.length; i++) {#}
+    {#            const cookie = cookies[i].trim();#}
+    {#            // Does this cookie string begin with the name we want?#}
+    {#            if (cookie.substring(0, name.length + 1) === (name + '=')) {#}
+    {#                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));#}
+    {#                break;#}
+    {#            }#}
+    {#        }#}
+    {#    }#}
+    {#    return cookieValue;    }#}
+    {##}
+    {#const csrftoken = getCookie('csrftoken');#}
+</script>
+
+</body>
+</html>
